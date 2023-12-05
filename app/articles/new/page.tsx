@@ -9,7 +9,7 @@ const NewArticlePage = () => {
         <TextField.Input placeholder="new issue" />
       </TextField.Root>
       <TextArea placeholder="new issue"></TextArea>
-      <Button>Create article</Button>
+      <Button className="hover:cursor-pointer">Create article</Button>
     </div>
   );
 };
