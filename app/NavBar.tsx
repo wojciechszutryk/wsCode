@@ -1,11 +1,15 @@
+"use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
 import { FaCode } from "react-icons/fa6";
 
 const NavBar = () => {
+  const currentPath = usePathname();
+
   const links = [
     { href: "/", label: "Dashboard" },
-    { href: "/issues", label: "Issues" },
+    { href: "/articles", label: "Articles" },
   ];
 
   return (
@@ -18,7 +22,9 @@ const NavBar = () => {
           <li key={`${href}${label}`}>
             <Link
               href={href}
-              className="text-zinc-500 hover:text-zinc-300 transition-colors"
+              className={`${
+                href === currentPath ? "text-zinc-100" : "text-zinc-500"
+              } hover:text-zinc-300 transition-colors`}
             >
               {label}
             </Link>
