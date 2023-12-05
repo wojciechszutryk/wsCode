@@ -3,17 +3,24 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --background-rgb: 255 255 255;
+  --background-contrast-text-rgb: 51 34 34;
+  --alt-background-rgb: 238 238 238;
+  --background-alt-contrast-text-rgb: 0 0 0;
+  --accent-light-rgb: 238 238 238;
+  --accent-main-rgb: 167 29 41;
+  --accent-dark-rgb: 114 28 36;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+/* for some reson media queries are not working */
+:root.dark {
+  --background-rgb: 0 0 0;
+  --background-contrast-text-rgb: 255 255 255;
+  --alt-background-rgb: 17 17 17;
+  --background-alt-contrast-text-rgb: 255 255 255;
+  --accent-light-rgb: 17 17 17;
+  --accent-main-rgb: 29 167 41;
+  --accent-dark-rgb: 28 114 36;
 }
 
 body {

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 import { FaCode } from "react-icons/fa6";
+import ThemeSwitch from "../components/ThemeSwitch";
 
 const NavBar = () => {
   const currentPath = usePathname();
@@ -17,14 +18,15 @@ const NavBar = () => {
       <Link href="/">
         <FaCode />
       </Link>
+      <ThemeSwitch />
       <ul className="flex space-x-6">
         {links.map(({ href, label }) => (
           <li key={`${href}${label}`}>
             <Link
               href={href}
               className={`${
-                href === currentPath ? "text-zinc-100" : "text-zinc-500"
-              } hover:text-zinc-300 transition-colors`}
+                href === currentPath ? "text-accentMain" : "text-accentLight"
+              } hover:text-accentDark transition-colors`}
             >
               {label}
             </Link>

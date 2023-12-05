@@ -1,0 +1,4 @@
+.radix-themes {
+  --default-font-family: var(--font-inter) !important;
+  --accent-9: rgb(var(--accent-light-rgb)) !important;
+}
