@@ -2,8 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import { createArticleSchema } from "./schema";
 import prisma from "@/prisma/client";
 
+export async function GET() {
+  const articles = await prisma.article.findMany({});
+  return NextResponse.json(articles);
+}
+
 export async function POST(req: NextRequest) {
   const body = await req.json();
+
+  console.log("body", body);
 
   const validation = createArticleSchema.safeParse(body);
 
