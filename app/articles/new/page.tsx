@@ -11,6 +11,7 @@ import { CreateArticleDto } from "@/models/articles/article.dto";
 import { MdError } from "react-icons/md";
 import axios, { AxiosError } from "axios";
 import ErrorMessage from "@/app/components/ErrorMessage";
+import Spinner from "@/app/components/Spinner";
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 
@@ -28,10 +29,13 @@ const NewArticlePage = () => {
     },
   });
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleCreateArticle = async (data: CreateArticleDto) => {
     try {
+      setLoading(true);
       await axios.post("/api/articles", data);
+      setLoading(false);
       router.push("/articles");
     } catch (error) {
       console.log("error: ", error);
@@ -39,6 +43,7 @@ const NewArticlePage = () => {
       if (error instanceof AxiosError) {
         setError(error?.response?.data?.[0]?.message);
       } else {
+        setLoading(false);
         setError("Something went wrong, please try again later");
       }
     }
@@ -81,7 +86,9 @@ const NewArticlePage = () => {
           control={control}
           render={({ field }) => <MDEditor {...field} />}
         />
-        <Button className="hover:cursor-pointer">Create article</Button>
+        <Button className="hover:cursor-pointer" disabled={loading}>
+          Create article{loading && <Spinner />}
+        </Button>
       </form>
     </div>
   );
