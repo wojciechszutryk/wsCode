@@ -1,6 +1,4 @@
-export interface CreateArticleDto {
-  title: string;
-  description: string;
-  body?: string;
-  authorId: number;
-}
+import { createArticleSchema } from "@/app/api/articles/schema";
+import { z } from "zod";
+
+export type CreateArticleDto = z.infer<typeof createArticleSchema>;

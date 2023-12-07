@@ -1,5 +1,5 @@
 "use client";
-import { Button, Callout, TextArea, TextField } from "@radix-ui/themes";
+import { Button, Callout, Text, TextField } from "@radix-ui/themes";
 import React from "react";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
@@ -16,7 +16,12 @@ const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 
 const NewArticlePage = () => {
   const router = useRouter();
-  const { register, control, handleSubmit } = useForm<CreateArticleDto>({
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CreateArticleDto>({
     defaultValues: {
       //TODO: get authorId from session
       authorId: 1,
@@ -32,8 +37,6 @@ const NewArticlePage = () => {
       console.log("error: ", error);
 
       if (error instanceof AxiosError) {
-        console.log("error.response: ", error.response);
-
         setError(error?.response?.data?.[0]?.message);
       } else {
         setError("Something went wrong, please try again later");
@@ -55,23 +58,30 @@ const NewArticlePage = () => {
         className="max-w-xl space-y-3"
         onSubmit={handleSubmit(handleCreateArticle)}
       >
+        {errors.title && (
+          <Text color="red" as="p">
+            {errors.title.message}
+          </Text>
+        )}
         <TextField.Root>
           <TextField.Input
             placeholder="new issue"
             {...register("title", {
-              required: true,
-              minLength: 5,
-              maxLength: 255,
+              required: { value: true, message: "title is required" },
+              minLength: { value: 5, message: "title is too short" },
+              maxLength: { value: 50, message: "title is too long" },
             })}
           />
         </TextField.Root>
+        {errors.description && (
+          <Text color="red" as="p">
+            {errors.description.message}
+          </Text>
+        )}
         <TextField.Root>
           <TextField.Input
             placeholder="description"
-            {...register("description", {
-              required: false,
-              minLength: 5,
-            })}
+            {...register("description")}
           />
         </TextField.Root>
         <Controller
