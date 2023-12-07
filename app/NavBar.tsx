@@ -3,7 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 import { FaCode } from "react-icons/fa6";
-import ThemeSwitch from "../components/ThemeSwitch";
+import ThemeSwitch from "./components/ThemeSwitch";
 
 const NavBar = () => {
   const currentPath = usePathname();

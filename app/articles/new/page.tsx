@@ -9,8 +9,8 @@ import { Controller, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { CreateArticleDto } from "@/models/articles/article.dto";
 import { MdError } from "react-icons/md";
-import axios, { Axios, AxiosError } from "axios";
-import Error from "next/error";
+import axios, { AxiosError } from "axios";
+import ErrorMessage from "@/app/components/ErrorMessage";
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 
@@ -58,11 +58,7 @@ const NewArticlePage = () => {
         className="max-w-xl space-y-3"
         onSubmit={handleSubmit(handleCreateArticle)}
       >
-        {errors.title && (
-          <Text color="red" as="p">
-            {errors.title.message}
-          </Text>
-        )}
+        <ErrorMessage>{errors.title?.message}</ErrorMessage>
         <TextField.Root>
           <TextField.Input
             placeholder="new issue"
@@ -73,11 +69,7 @@ const NewArticlePage = () => {
             })}
           />
         </TextField.Root>
-        {errors.description && (
-          <Text color="red" as="p">
-            {errors.description.message}
-          </Text>
-        )}
+        <ErrorMessage>{errors.description?.message}</ErrorMessage>
         <TextField.Root>
           <TextField.Input
             placeholder="description"
