@@ -1,5 +1,5 @@
 "use client";
-import { Button, Callout, Text, TextField } from "@radix-ui/themes";
+import { Callout, TextField } from "@radix-ui/themes";
 import React from "react";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
@@ -7,11 +7,12 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { CreateArticleDto } from "@/models/articles/article.dto";
+import { IArticle } from "@/models/articles/article.model";
 import { MdError } from "react-icons/md";
 import axios, { AxiosError } from "axios";
 import ErrorMessage from "@/app/components/ErrorMessage";
 import Spinner from "@/app/components/Spinner";
+import Button from "@/app/components/Button";
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 
@@ -22,7 +23,7 @@ const NewArticlePage = () => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<CreateArticleDto>({
+  } = useForm<IArticle>({
     defaultValues: {
       //TODO: get authorId from session
       authorId: 1,
@@ -31,7 +32,7 @@ const NewArticlePage = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const handleCreateArticle = async (data: CreateArticleDto) => {
+  const handleCreateArticle = async (data: IArticle) => {
     try {
       setLoading(true);
       await axios.post("/api/articles", data);
@@ -86,7 +87,12 @@ const NewArticlePage = () => {
           control={control}
           render={({ field }) => <MDEditor {...field} />}
         />
-        <Button className="hover:cursor-pointer" disabled={loading}>
+        <Controller
+          name={"body"}
+          control={control}
+          render={({ field }) => <MDEditor {...field} />}
+        />
+        <Button disabled={loading}>
           Create article{loading && <Spinner />}
         </Button>
       </form>

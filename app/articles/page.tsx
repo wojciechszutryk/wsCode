@@ -1,7 +1,8 @@
 import prisma from "@/prisma/client";
-import { Button, Table } from "@radix-ui/themes";
+import { Table } from "@radix-ui/themes";
 import Link from "next/link";
 import React from "react";
+import Button from "../components/Button";
 
 const ArticlesPage = async () => {
   const articles = await prisma.article.findMany();
